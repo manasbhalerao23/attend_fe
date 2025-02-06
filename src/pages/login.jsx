@@ -1,16 +1,115 @@
-import React, { useState } from 'react';
-import { Lock, Mail, User, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Lock, Mail, User } from "lucide-react";
+import axios from "axios";
+import { BASE_URL } from "../Utilities/constant";
 
 function Login() {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [rollno, setRollno] = useState("");
+  const [year, setYear] = useState("");
+  const [branch, setBranch] = useState("");
 
-  const handleSubmit = (event) => {
+  const [domainType, setDomainType] = useState(null);
+  const [code, setCode] = useState("");
+
+  useEffect(() => {
+    const domain = email.split("@")[1];
+    if (domain === "gmail.com" && !isSignIn) {
+      setDomainType("gmail");
+    } else if (domain === "ietdavv.edu.in") {
+      setDomainType("ietdavv");
+    } else {
+      setDomainType(null);
+    }
+  }, [email, isSignIn]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle authentication
-    console.log(isSignIn ? 'Signing in...' : 'Signing up...', { email, password, name });
+    const domain = email.split("@")[1];
+    console.log(domain);
+
+    if (isSignIn && domain == "ietdavv.edu.in") {
+      // Sign in logic
+      try {
+        const res = await axios.post(
+          BASE_URL + "/user/signin/student/api",
+          { email, password },
+          { withCredentials: true }
+        );
+        console.log(res.data.message);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    
+    if (
+      isSignIn &&
+      (domain == "gmail.com" ||
+        domain == "gmail.co.in" ||
+        domain == "yahoo.com" ||
+        domain == "yahoo.co.in")
+    ) {
+      // Sign in logic
+      try {
+        const res = await axios.post(
+          BASE_URL + "/user/signin/teacher/api",
+          { email, password },
+          { withCredentials: true }
+        );
+        console.log(res.data.message);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    if (!isSignIn && domain == "ietdavv.edu.in") {
+      const sec = branch;
+      const roll_no = rollno;
+
+      // Sign in logic
+      try {
+        const res = await axios.post(
+          BASE_URL + "/user/signup/student/api",
+          { email, password, name, sec, roll_no, year },
+          { withCredentials: true }
+        );
+        console.log(res.data.message);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    if (!isSignIn && domain == "gmail.com" ||
+      domain == "gmail.co.in" ||
+      domain == "yahoo.com" ||
+      domain == "yahoo.co.in") {
+
+        
+
+      // Sign in logic
+      try {
+
+        const res = await axios.post(
+          BASE_URL + "/user/signup/teacher/api",
+          { email, password, name, code},
+          { withCredentials: true }
+        );
+        console.log(res.data.message);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    // Logging input values
+    console.log(isSignIn ? "Signing in..." : "Signing up...", {
+      email,
+      password,
+      name,
+      code,
+    });
   };
 
   return (
@@ -21,15 +120,15 @@ function Login() {
             <Lock className="h-6 w-6 text-blue-600" />
           </div>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            {isSignIn ? 'Welcome back' : 'Create your account'}
+            {isSignIn ? "Welcome back" : "Create your account"}
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            {isSignIn ? "Don't have an account? " : 'Already have an account? '}
+            {isSignIn ? "Don't have an account? " : "Already have an account? "}
             <button
               onClick={() => setIsSignIn(!isSignIn)}
               className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
             >
-              {isSignIn ? 'Sign up' : 'Sign in'}
+              {isSignIn ? "Sign up" : "Sign in"}
             </button>
           </p>
         </div>
@@ -47,12 +146,11 @@ function Login() {
                   </div>
                   <input
                     id="name"
-                    name="name"
                     type="text"
-                    required={!isSignIn}
+                    required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                    className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     placeholder="Full Name"
                   />
                 </div>
@@ -69,13 +167,11 @@ function Login() {
                 </div>
                 <input
                   id="email"
-                  name="email"
                   type="email"
-                  autoComplete="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="Email address"
                 />
               </div>
@@ -91,17 +187,84 @@ function Login() {
                 </div>
                 <input
                   id="password"
-                  name="password"
                   type="password"
-                  autoComplete={isSignIn ? 'current-password' : 'new-password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full pl-10 pr-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
             </div>
+
+            {/* Dynamically Render Extra Fields */}
+            {!isSignIn && domainType === "gmail" && (
+              <div>
+                <label htmlFor="extra-gmail" className="sr-only">
+                  Invitation Code
+                </label>
+                <input
+                  id="extra-gmail"
+                  type="text"
+                  required
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Invitation Code"
+                />
+              </div>
+              
+            )}
+
+            {!isSignIn && domainType === "ietdavv" && (
+              <div>
+                <label htmlFor="extra-ietdavv" className="sr-only">
+                  Roll Number
+                </label>
+                <input
+                  id="extra-ietdavv"
+                  type="text"
+                  required
+                  value={rollno}
+                  onChange={(e) => setRollno(e.target.value)}
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Enter your Roll Number"
+                />
+              </div>
+            )}
+
+            {!isSignIn && domainType === "ietdavv" && (
+              <div>
+                <label htmlFor="extra-ietdavv" className="sr-only">
+                  Year
+                </label>
+                <input
+                  id="extra-ietdavv"
+                  type="text"
+                  required
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Year"
+                />
+              </div>
+            )}
+            {!isSignIn && domainType === "ietdavv" && (
+              <div>
+                <label htmlFor="extra-ietdavv" className="sr-only">
+                  Branch
+                </label>
+                <input
+                  id="extra-ietdavv"
+                  type="text"
+                  required
+                  value={branch}
+                  onChange={(e) => setBranch(e.target.value)}
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Branch"
+                />
+              </div>
+            )}
           </div>
 
           {isSignIn && (
@@ -117,9 +280,9 @@ function Login() {
 
           <button
             type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
           >
-            {isSignIn ? 'Sign in' : 'Create account'}
+            {isSignIn ? "Sign in" : "Create account"}
           </button>
         </form>
       </div>
