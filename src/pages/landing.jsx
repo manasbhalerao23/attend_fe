@@ -1,11 +1,7 @@
 import React from 'react';
 import { 
   Users, 
-  ClipboardCheck, 
-  Bell, 
-  PieChart, 
-  Shield, 
-  CheckCircle 
+  ClipboardCheck
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
