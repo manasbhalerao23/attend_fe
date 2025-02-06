@@ -2,8 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Lock, Mail, User } from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from "../Utilities/constant";
+import { useDispatch, useSelector } from "react-redux";
+import store from "../Utilities/store";
+import { useNavigate } from "react-router-dom";
+import { addItem } from "../Utilities/cartSlice";
 
 function Login() {
+  const userInfo = useSelector((store) => store.cart);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +31,7 @@ function Login() {
     } else {
       setDomainType(null);
     }
-  }, [email, isSignIn]);
+  }, [email, isSignIn,userInfo]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,12 +47,27 @@ function Login() {
           { withCredentials: true }
         );
         console.log(res.data.message);
+        
+        // console.log("Dispatching student info to Redux:", res.data.message);
+        const user= {
+          name:res?.data?.message?.name,
+          email:res?.data?.message?.email,
+          rollno:res?.data?.message?.roll_no,
+          section:res?.data?.message?.section_id,
+          student_Id:res?.data?.message?.student_id,
+          year:res?.data?.message?.year,
+          role:res?.data?.message?.role
+
+        }
+dispatch(addItem(user));
+// console.log("Updated Redux state:", store.getState().cart);
+navigate("/studhome")
+
       } catch (err) {
         console.log(err);
       }
     }
 
-    
     if (
       isSignIn &&
       (domain == "gmail.com" ||
@@ -60,7 +82,20 @@ function Login() {
           { email, password },
           { withCredentials: true }
         );
+
         console.log(res.data.message);
+        // console.log("Dispatching student info to Redux:", res.data.message);
+        const user= {
+          name:res?.data?.message?.faculty_name,
+          email:res?.data?.message?.email,
+          
+          faculty_id:res?.data?.message?.faculty_id,
+          role:res?.data?.message?.role
+
+        }
+dispatch(addItem(user));
+// console.log("Updated Redux state:", store.getState().cart);
+navigate("/teachhome")
       } catch (err) {
         console.log(err);
       }
@@ -78,26 +113,27 @@ function Login() {
           { withCredentials: true }
         );
         console.log(res.data.message);
+        setIsSignIn(!isSignIn);
       } catch (err) {
         console.log(err);
       }
     }
 
-    if (!isSignIn && domain == "gmail.com" ||
+    if (
+      (!isSignIn && domain == "gmail.com") ||
       domain == "gmail.co.in" ||
       domain == "yahoo.com" ||
-      domain == "yahoo.co.in") {
-
-        
-
+      domain == "yahoo.co.in"
+    ) {
       // Sign in logic
       try {
         const res = await axios.post(
           BASE_URL + "/user/signup/teacher/api",
-          { email, password, name, code},
+          { email, password, name, code },
           { withCredentials: true }
         );
         console.log(res.data.message);
+        setIsSignIn(!isSignIn);
       } catch (err) {
         console.log(err);
       }
@@ -212,7 +248,6 @@ function Login() {
                   placeholder="Invitation Code"
                 />
               </div>
-              
             )}
 
             {!isSignIn && domainType === "ietdavv" && (
@@ -237,6 +272,15 @@ function Login() {
                 <label htmlFor="extra-ietdavv" className="sr-only">
                   Year
                 </label>
+                <input
+                  id="extra-ietdavv"
+                  type="text"
+                  required
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="Year"
+                />
               </div>
             )}
             {!isSignIn && domainType === "ietdavv" && (

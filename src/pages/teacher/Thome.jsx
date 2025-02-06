@@ -7,12 +7,18 @@ import {
   LogOut,
   ClipboardCheck
 } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import store from '../../Utilities/store';
 
 function Teachhome() {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
+const user= useSelector((store)=>store.cart);
+console.log(user);
+
+if(user?.role==='Teacher'){
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
@@ -234,7 +240,7 @@ function Teachhome() {
         </div>
       </main>
     </div>
-  );
+  );}
 }
 
 export default Teachhome;

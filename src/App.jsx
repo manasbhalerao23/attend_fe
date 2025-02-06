@@ -7,19 +7,23 @@ import GenCode from './pages/teacher/gencode'
 import MarkAttend from './pages/student/markattend'
 import Studhome from './pages/student/Shome'
 import Teachhome from './pages/teacher/Thome'
+import { Provider } from 'react-redux'
+import store from './Utilities/store'
 
 function App() {
 
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='' element={<Landing/>}/>
-    //     <Route path='/login' element={<Login/>}/>
-    //     <Route path='/studhome' element={<Studhome/>}/>
-    //     <Route path='/teachhome' element={<Teachhome/>}/>
-    //   </Routes>
-    // </BrowserRouter>
-    <Studhome/>
+    <Provider store={store}>
+     <BrowserRouter>
+       <Routes>
+         <Route path='' element={<Landing/>}/>
+         <Route path='/login' element={<Login/>}/>
+         <Route path='/studhome' element={<Studhome/>}/>
+         <Route path='/teachhome' element={<Teachhome/>}/>
+       </Routes>
+     </BrowserRouter>
+    {/* <Studhome/> */}
+    </Provider>
   )
 }
 

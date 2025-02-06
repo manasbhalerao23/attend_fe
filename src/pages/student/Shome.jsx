@@ -9,9 +9,13 @@ import {
   Settings,
   ClipboardCheck
 } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import store from '../../Utilities/store';
 
 function Studhome() {
   const [showNotifications, setShowNotifications] = useState(false);
+const user= useSelector((store)=>store.cart);
+console.log(user);
 
   //data from BE
   const studentInfo = {
@@ -30,7 +34,7 @@ function Studhome() {
 //     { message: "Attendance marked for Database Systems", time: "2 hours ago" },
 //     { message: "Low attendance warning in Data Structures", time: "1 day ago" },
 //   ];
-
+if(user?.role==='Student'){
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -183,6 +187,7 @@ function Studhome() {
       </main>
     </div>
   );
+}
 }
 
 export default Studhome;
