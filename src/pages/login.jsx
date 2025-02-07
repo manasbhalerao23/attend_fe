@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, User, ChevronDown} from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from "../Utilities/constant";
 import { useDispatch, useSelector } from "react-redux";
 import store from "../Utilities/store";
 import { useNavigate } from "react-router-dom";
 import { addItem } from "../Utilities/cartSlice";
+
 
 function Login() {
   const userInfo = useSelector((store) => store.cart);
@@ -21,6 +22,8 @@ function Login() {
 
   const [domainType, setDomainType] = useState(null);
   const [code, setCode] = useState("");
+
+  const branches = ['cs','ee'];
 
   useEffect(() => {
     const domain = email.split("@")[1];
@@ -267,7 +270,7 @@ navigate("/teachhome")
               </div>
             )}
 
-            {!isSignIn && domainType === "ietdavv" && (
+            {/* {!isSignIn && domainType === "ietdavv" && (
               <div>
                 <label htmlFor="extra-ietdavv" className="sr-only">
                   Year
@@ -282,8 +285,27 @@ navigate("/teachhome")
                   placeholder="Year"
                 />
               </div>
-            )}
+            )} */}
+
             {!isSignIn && domainType === "ietdavv" && (
+              <div>
+                <h1 htmlFor="extra-ietdavv" className="sr-only">
+                  Year
+                </h1>
+                <select id="extra-ietdavv" required value={year} onChange={(e)=>setYear(e.target.value)} 
+                  className="cursor-pointer appearance-auto relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                  <option>Select Year</option>
+                  <option>I</option>
+                  <option>II</option>
+                  <option>III</option>
+                  <option>IV</option>
+                </select>
+              </div>
+            )}
+
+
+            {/* {!isSignIn && domainType === "ietdavv" && (
               <div>
                 <label htmlFor="extra-ietdavv" className="sr-only">
                   Branch
@@ -297,6 +319,23 @@ navigate("/teachhome")
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="Branch"
                 />
+              </div>
+            )} */}
+
+          {!isSignIn && domainType === "ietdavv" && (
+              <div>
+                <h1 htmlFor="extra-ietdavv" className="sr-only">
+                  Branch
+                </h1>
+                <select required id="extra-ietdavv" value={branch} onChange={(e)=>setBranch(e.target.value)} 
+                  className="cursor-pointer appearance-auto relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                  <option>Select Branch</option>
+                  <option>CSA</option>
+                  <option>CSB</option>
+                  <option>ITA</option>
+                  <option>ITB</option>
+                </select>
               </div>
             )}
           </div>
