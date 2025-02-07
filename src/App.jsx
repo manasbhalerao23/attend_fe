@@ -9,6 +9,7 @@ import Studhome from './pages/student/Shome'
 import Teachhome from './pages/teacher/Thome'
 import { Provider } from 'react-redux'
 import store from './Utilities/store'
+import Checkattend from './pages/student/checkattend'
 
 function App() {
 
@@ -22,7 +23,6 @@ function App() {
          <Route path='/teachhome' element={<Teachhome/>}/>
        </Routes>
      </BrowserRouter>
-    {/* <Studhome/> */}
     </Provider>
   )
 }
