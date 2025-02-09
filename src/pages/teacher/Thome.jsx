@@ -9,11 +9,15 @@ import {
 } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import store from '../../Utilities/store';
+import { useNavigate } from 'react-router-dom';
+
 
 function Teachhome() {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
+
+  let navigate = useNavigate();
 
 const user= useSelector((store)=>store.cart);
 console.log(user);
@@ -32,16 +36,18 @@ if(user?.role==='Teacher'){
         <nav className="mt-6">
           {[
             { icon: Calendar, text: 'Dashboard', active: true },
-            { icon: Users, text: 'Students' },
+            { icon: Users, text: 'Get Attend' ,onClick: () => navigate('/getattend') },
             { icon: Bell, text: 'Notifications', badge: 0 },
             { icon: Settings, text: 'Settings' },
           ].map((item, index) => (
             <a
               key={index}
+              onClick={item.text === 'Get Attend' ? item.onClick : undefined}
               className={`cursor-pointer flex items-center justify-between px-6 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors ${
                 item.active ? 'bg-blue-50 text-blue-600' : ''
               }`}
             >
+              
               <div className="flex items-center gap-3">
                 <item.icon className="h-5 w-5" />
                 {item.text}
@@ -126,16 +132,16 @@ if(user?.role==='Teacher'){
                 </select>
               </div>
               <div className="flex items-end">
-                <button className="cursor-pointer w-full bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors text-lg">
-                  Start Taking Attendance
+                <button onClick={()=>navigate('/gencode')} className="cursor-pointer w-full bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors text-lg">
+                  Gen code
                 </button>
               </div>
             </div>
-            <div className="bg-white/10 rounded-lg p-4">
+            {/* <div className="bg-white/10 rounded-lg p-4">
               <p className="text-sm text-blue-100">
                 Currently selected: {selectedClass} Section {selectedSection} | Academic Year {selectedYear}
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
 

@@ -21,6 +21,10 @@ function App() {
          <Route path='/login' element={<Login/>}/>
          <Route path='/studhome' element={<Studhome/>}/>
          <Route path='/teachhome' element={<Teachhome/>}/>
+         <Route path='/getattend' element={<GetAttend/>}/>
+         <Route path='/gencode' element={<GenCode/>}/>
+         <Route path='/markattend' element={<MarkAttend/>}/>
+         <Route path='/checkattend' element={<Checkattend/>}/>
        </Routes>
      </BrowserRouter>
     </Provider>

@@ -11,9 +11,13 @@ import {
 } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import store from '../../Utilities/store';
+import { useNavigate } from 'react-router-dom';
 
 function Studhome() {
   const [showNotifications, setShowNotifications] = useState(false);
+
+  let navigate = useNavigate();
+
 const user= useSelector((store)=>store.cart);
 console.log(user);
 
@@ -90,6 +94,14 @@ if(user?.role==='Student'){
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-blue-600">Student Information</h2>
               <span className="text-sm text-gray-600">ID: {studentInfo.id}</span>
+              <div className='flex gap-3'>
+                <button onClick={() => navigate('/markattend')} className='text-blue-600 bg-blue-200 cursor-pointer rounded-xl px-2 py-1'>
+                  Mark Attendence
+                </button>
+                <button onClick={() => navigate('/checkattend')} className=' text-blue-600 bg-blue-200 cursor-pointer rounded-xl px-2 py-1'>
+                  Check Attendence
+                </button>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
