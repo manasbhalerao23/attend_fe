@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Teachhome() {
-  const [selectedClass, setSelectedClass] = useState('');
+  const [studentNum, setStudentNum] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
 
@@ -21,6 +21,10 @@ function Teachhome() {
 
 const user= useSelector((store)=>store.cart);
 console.log(user);
+
+
+
+
 
 if(user?.role==='Teacher'){
   return (
@@ -96,40 +100,47 @@ if(user?.role==='Teacher'){
             <p className="text-blue-100 mb-6 text-lg">Take attendance for your current class </p>
             <div className="grid grid-cols-4 gap-6 mb-6">
               <div>
-                <label className="block text-blue-100 text-sm mb-2">Class</label>
-                <select 
-                  value={selectedClass}
-                  onChange={(e) => setSelectedClass(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
-                >
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i} value={`Class ${i + 1}`}>Class {i + 1}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-blue-100 text-sm mb-2">Section</label>
-                <select 
-                  value={selectedSection}
-                  onChange={(e) => setSelectedSection(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
-                >
-                  {['A', 'B'].map(section => (
-                    <option key={section} value={section}>Section {section}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
                 <label className="block text-blue-100 text-sm mb-2">Academic Year</label>
                 <select 
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
                   className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
                 >
-                  {[2025].map(year => (
-                    <option key={year} value={year}>{year}</option>
+                  {[1,2,3,4].map((year,idx) => (
+                    <option className='bg-blue-600' value={idx} key={year}>{year}</option>
                   ))}
                 </select>
+              </div>
+              <div>
+                <label className="block text-blue-100 text-sm mb-2">Branch</label>
+                <select 
+                  value={selectedSection}
+                  onChange={(e) => setSelectedSection(e.target.value)}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
+                >
+                  {['CSA', 'CSB','ITA','ITB'].map((section) => (
+                    <option className='bg-blue-600' key={section} value={section}>{section}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-blue-100 text-sm mb-2">No. of Students</label>
+                {/* <select 
+                  value={studentNum}
+                  onChange={(e) => setStudentNum(e.target.value)}
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
+                >
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <option key={i} value={`Class ${i + 1}`}>Class {i + 1}</option>
+                  ))}
+                </select> */}
+                <input
+  type="number"
+  value={studentNum}
+  onChange={(e) => setStudentNum(e.target.value)}
+  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white outline-none focus:ring-2 focus:ring-white/30"
+/>
+
               </div>
               <div className="flex items-end">
                 <button onClick={()=>navigate('/gencode')} className="cursor-pointer w-full bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors text-lg">
@@ -139,7 +150,7 @@ if(user?.role==='Teacher'){
             </div>
             {/* <div className="bg-white/10 rounded-lg p-4">
               <p className="text-sm text-blue-100">
-                Currently selected: {selectedClass} Section {selectedSection} | Academic Year {selectedYear}
+                Currently selected: {studentNum} Section {selectedSection} | Academic Year {selectedYear}
               </p>
             </div> */}
           </div>

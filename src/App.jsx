@@ -16,6 +16,7 @@ function App() {
   return (
     <Provider store={store}>
      <BrowserRouter>
+     
        <Routes>
          <Route path='' element={<Landing/>}/>
          <Route path='/login' element={<Login/>}/>

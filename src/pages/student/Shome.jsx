@@ -21,7 +21,6 @@ function Studhome() {
   let navigate = useNavigate();
 
   const user = useSelector((store) => store.cart);
-  console.log(user);
 
   // Data from BE
   const studentInfo = {
@@ -30,6 +29,20 @@ function Studhome() {
     course: "Computer Science",
     year: user?.year,
     attendance: 12,
+  };
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(
+        `${BASE_URL}/user/signin/logout`,
+        {},
+        { withCredentials: true }
+      );
+      console.log(res.data);
+return navigate("/login")
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // API to fetch recent attendance
@@ -42,7 +55,7 @@ function Studhome() {
         }
       );
 
-      console.log("API Response:", res?.data?.message);
+      console.log("API Response:", res);
       setRecentAttendance(res?.data?.message || []); // ✅
     } catch (err) {
       console.error("Error fetching attendance:", err);
@@ -79,9 +92,18 @@ function Studhome() {
                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
                   <span className="text-blue-600 font-semibold">T</span>
                 </div>
+
                 <span className="font-medium text-black">
                   {studentInfo.name}
                 </span>
+                <div className="btn">
+                  <button
+                    onClick={handleLogout}
+                    className="text-blue-600 bg-blue-200 cursor-pointer rounded-xl px-2 py-1"
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
               <Settings className="text-gray-600 hover:text-gray-800 cursor-pointer" />
             </div>
