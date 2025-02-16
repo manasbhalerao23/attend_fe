@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { ClipboardCheck, Calendar, CheckCircle2, XCircle } from 'lucide-react';
 
 // data come from api
-const subjects = [
-  { id: 1, name: 'dbms', totalClasses: 50, attended: 45 }
-];
+
 
 function Checkattend() {
   const [selectedSubject, setSelectedSubject] = useState(subjects[0]);
@@ -15,6 +13,7 @@ function Checkattend() {
     if (percentage >= 60) return 'text-yellow-600';
     return 'text-red-600';
   };
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -31,6 +30,7 @@ function Checkattend() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-md p-6">
+    
           {/* Subject Selection */}
           <div className="mb-8 ">
             <label htmlFor="subject" className=" block text-sm font-medium text-gray-700 mb-2">
@@ -40,13 +40,13 @@ function Checkattend() {
               id="subject"
               className="bg-gray-100 cursor-pointer mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
               value={selectedSubject.id}
-              onChange={(e) => setSelectedSubject(subjects.find(s => s.id === Number(e.target.value)) || subjects[0])}
+              onChange={(e) => setSelectedSubject(e)}
             >
-              {subjects.map((subject) => (
-                <option key={subject.id} value={subject.id}>
-                  {subject.name}
+              
+               <option key={1} value={2}>
+                  DBMS
                 </option>
-              ))}
+              
             </select>
           </div>
           

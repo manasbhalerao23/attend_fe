@@ -8,6 +8,7 @@ import {
   Bell,
   Settings,
   ClipboardCheck,
+  LogOut,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import store from "../../Utilities/store";
@@ -56,7 +57,7 @@ return navigate("/login")
       );
 
       console.log("API Response:", res);
-      setRecentAttendance(res?.data?.message || []); // ✅
+      setRecentAttendance(res?.data?.message || []); 
     } catch (err) {
       console.error("Error fetching attendance:", err);
     }
@@ -64,7 +65,7 @@ return navigate("/login")
 
   useEffect(() => {
     recentAPI();
-  }, []); // ✅
+  }, []); 
 
   if (user?.role === "Student") {
     return (
@@ -97,12 +98,13 @@ return navigate("/login")
                   {studentInfo.name}
                 </span>
                 <div className="btn">
-                  <button
-                    onClick={handleLogout}
-                    className="text-blue-600 bg-blue-200 cursor-pointer rounded-xl px-2 py-1"
-                  >
-                    Logout
-                  </button>
+                <a
+              className="cursor-pointer flex items-center gap-3 text-gray-700 hover:text-red-600 transition-colors"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-5 w-5" />
+              Logout
+            </a>
                 </div>
               </div>
               <Settings className="text-gray-600 hover:text-gray-800 cursor-pointer" />

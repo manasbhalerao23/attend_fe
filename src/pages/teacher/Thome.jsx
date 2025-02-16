@@ -10,6 +10,8 @@ import {
 import { useSelector } from 'react-redux';
 import store from '../../Utilities/store';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../../Utilities/constant';
 
 
 function Teachhome() {
@@ -22,9 +24,19 @@ function Teachhome() {
 const user= useSelector((store)=>store.cart);
 console.log(user);
 
-
-
-
+const handleLogout = async () => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/user/signin/logout`,
+      {},
+      { withCredentials: true }
+    );
+    console.log(res.data);
+return navigate("/login")
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 if(user?.role==='Teacher'){
   return (
@@ -77,6 +89,7 @@ if(user?.role==='Teacher'){
             </div>
             <a
               className="cursor-pointer flex items-center gap-3 text-gray-700 hover:text-red-600 transition-colors"
+              onClick={handleLogout}
             >
               <LogOut className="h-5 w-5" />
               Logout
