@@ -129,7 +129,7 @@ function GenCode() {
         </form>
       </div> */}
       <div className="mb-8">
-        <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-8 text-white">
+        <div className="bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl p-8 text-white">
           <h3 className="text-2xl font-semibold mb-4">
             Attendance Code Generator
           </h3>
@@ -146,11 +146,11 @@ function GenCode() {
                 onChange={(e) => setSelectedYear(e.target.value)}
                 className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
               >
-                <option className="bg-blue-600" value={""}>
+                <option className="bg-teal-500" value={""}>
                   Select Year
                 </option>
                 {[1, 2, 3, 4].map((year) => (
-                  <option className="bg-blue-600" value={year} key={year}>
+                  <option className="bg-teal-500" value={year} key={year}>
                     {year}
                   </option>
                 ))}
@@ -163,26 +163,26 @@ function GenCode() {
                 onChange={(e) => setSelectedSection(e.target.value)}
                 className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white"
               >
-                <option className="bg-blue-600" value={""}>
+                <option className="bg-teal-500" value={""}>
                   Select Section
                 </option>
 
                 {["CSA", "CSB", "ITA", "ITB"].map((section) => (
-                  <option className="bg-blue-600" key={section} value={section}>
+                  <option className="bg-teal-500" key={section} value={section}>
                     {section}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-blue-100 text-sm mb-2">
+              <label className="block text-blue-100 text-sm mb-2 input:focus ">
                 Subject
               </label>
               <input
                 type="text"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white outline-none focus:ring-2 focus:ring-white/30"
+                className="cursor-pointer w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white outline-none focus:ring-2 focus:ring-white/30"
                 placeholder="Enter Subject..."
               />
             </div>
@@ -203,7 +203,7 @@ function GenCode() {
                 type="number"
                 value={studentNum}
                 onChange={(e) => setStudentNum(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white outline-none focus:ring-2 focus:ring-white/30"
+                className="cursor-pointer w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white outline-none focus:ring-2 focus:ring-white/30"
                 placeholder="Enter No. of Students"
 
               />
@@ -212,7 +212,7 @@ function GenCode() {
             <div className="flex items-end">
               <button
                 onClick={handleGenCode}
-                className="cursor-pointer w-full bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors text-lg"
+                className="cursor-pointer w-full bg-white text-blue-600 px-6 py-3 rounded-lg font-medium hover:bg-green-300 transition-all duration-500 text-lg"
               >
                 Gen code
               </button>
@@ -220,11 +220,11 @@ function GenCode() {
           </div>
         </div>
       </div>
-      <div className="h-44 w-64 bg-gray-400 rounded-2xl m-5">
-        <div className="">
+      <div className="h-32 w-64 bg-teal-200 rounded-2xl m-5">
+        <div className="pl-1">
           <h2 className="text-3xl font-bold text-blue-600 mb-4 p-2">Generated Code</h2>
         </div>
-        <div className="text-white font-bold text-2xl p-3 flex">{code}</div>
+        <div className="text-gray-800 font-bold text-2xl p-3 flex">{code}</div>
       </div>
     </div>
   );

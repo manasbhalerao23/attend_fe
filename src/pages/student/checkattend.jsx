@@ -5,7 +5,7 @@ import { ClipboardCheck, Calendar, CheckCircle2, XCircle } from 'lucide-react';
 
 
 function Checkattend() {
-  const [selectedSubject, setSelectedSubject] = useState(subjects[0]);
+  const [selectedSubject, setSelectedSubject] = useState([]);
 
   const attendancePercentage = Math.round((selectedSubject.attended / selectedSubject.totalClasses) * 100);
   const getAttendanceColor = (percentage) => {
