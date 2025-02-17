@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../../Utilities/constant";
+import { useNavigate } from "react-router-dom";
 function GenCode() {
   const [studentNum, setStudentNum] = useState();
   const [selectedSection, setSelectedSection] = useState();
   const [selectedYear, setSelectedYear] = useState();
   const [subject, setSubject] = useState();
   const [code,setCode]=useState();
+  const navigate = useNavigate();
 
   const handleGenCode = async () => {
     try {
@@ -220,12 +222,22 @@ function GenCode() {
           </div>
         </div>
       </div>
+
+      <div className="">
       <div className="h-32 w-64 bg-teal-200 rounded-2xl m-5">
         <div className="pl-1">
           <h2 className="text-3xl font-bold text-blue-600 mb-4 p-2">Generated Code</h2>
         </div>
         <div className="text-gray-800 font-bold text-2xl p-3 flex">{code}</div>
       </div>
+
+        <div className="flex justify-center">
+          <button onClick={() => navigate('/getattend')} className="cursor-pointer hover:bg-blue-800 rounded-2xl bg-blue-500 text-blue-50 transition-all duration-200 p-2" >
+            Get Attendence
+          </button>
+        </div>
+      </div>
+      
     </div>
   );
 }

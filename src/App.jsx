@@ -29,7 +29,12 @@ function App() {
     //    </Routes>
     //  </BrowserRouter>
     // </Provider>
-    <GenCode/>
+    <BrowserRouter>
+      <Routes>
+      <Route path='' element={<Checkattend/>}/>
+      <Route path='/getattend' element={<GetAttend/>}/>
+    </Routes>
+    </BrowserRouter>
   )
 }
 

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { ClipboardCheck, Calendar, CheckCircle2, XCircle } from 'lucide-react';
+import axios from 'axios';
+import { BASE_URL } from '../../Utilities/constant';
 
 // data come from api
 
 
 function Checkattend() {
   const [selectedSubject, setSelectedSubject] = useState([]);
+  const [checkedAttend, setcheckedAttend] = useState([]);
 
   const attendancePercentage = Math.round((selectedSubject.attended / selectedSubject.totalClasses) * 100);
   const getAttendanceColor = (percentage) => {
@@ -13,6 +16,23 @@ function Checkattend() {
     if (percentage >= 60) return 'text-yellow-600';
     return 'text-red-600';
   };
+
+  const handlecheckAttend = async() => {
+    const user = useSelector((store) => store.cart);
+    try{
+      const res = await axios.get(
+        `${BASE_URL}/student/checkAttendence`,
+         {
+          subject: selectedSubject,
+          id: user.id
+         }
+      );
+    }
+    catch(e){
+      console.log(e);
+    }
+    setcheckedAttend(res);
+  }
 
 
   return (
@@ -115,7 +135,15 @@ function Checkattend() {
               </div>
             </div>
           </div>
+          <div className='pt-2'>
+            <button onClick={handlecheckAttend} className='bg-blue-600 rounded-2xl p-2 transition-all duration-200 text-white w-48 cursor-pointer hover:bg-blue-500' >
+                  Submit
+            </button>
+          </div>
         </div>
+        <div>
+            {checkedAttend}
+          </div>
       </main>
     </div>
   );
