@@ -14,27 +14,27 @@ import Checkattend from './pages/student/checkattend'
 function App() {
 
   return (
-    // <Provider store={store}>
-    //  <BrowserRouter>
+    <Provider store={store}>
+     <BrowserRouter>
      
-    //    <Routes>
-    //      <Route path='' element={<Landing/>}/>
-    //      <Route path='/login' element={<Login/>}/>
-    //      <Route path='/studhome' element={<Studhome/>}/>
-    //      <Route path='/teachhome' element={<Teachhome/>}/>
-    //      <Route path='/getattend' element={<GetAttend/>}/>
-    //      <Route path='/gencode' element={<GenCode/>}/>
-    //      <Route path='/markattend' element={<MarkAttend/>}/>
-    //      <Route path='/checkattend' element={<Checkattend/>}/>
-    //    </Routes>
-    //  </BrowserRouter>
-    // </Provider>
-    <BrowserRouter>
-      <Routes>
-      <Route path='' element={<Checkattend/>}/>
-      <Route path='/getattend' element={<GetAttend/>}/>
-    </Routes>
-    </BrowserRouter>
+       <Routes>
+         <Route path='' element={<Landing/>}/>
+         <Route path='/login' element={<Login/>}/>
+         <Route path='/studhome' element={<Studhome/>}/>
+         <Route path='/teachhome' element={<Teachhome/>}/>
+         <Route path='/getattend' element={<GetAttend/>}/>
+         <Route path='/gencode' element={<GenCode/>}/>
+         <Route path='/markattend' element={<MarkAttend/>}/>
+         <Route path='/checkattend' element={<Checkattend/>}/>
+       </Routes>
+     </BrowserRouter>
+    </Provider>
+    // <BrowserRouter>
+    //   <Routes>
+    //   <Route path='' element={<Checkattend/>}/>
+    //   <Route path='/getattend' element={<GetAttend/>}/>
+    // </Routes>
+    // </BrowserRouter>
   )
 }
 
